@@ -1,10 +1,12 @@
 import Banner from "@/components/molecules/Banner/Banner";
-import React from "react";
+import React, { Suspense } from "react";
 
 const LandingPage = () => {
   return (
     <div className="px-6 md:px-28 mb-14">
-      <Banner />
+      <Suspense fallback={<p>loading</p>}>
+        <Banner />
+      </Suspense>
       {/* <CategoryHomeList />
       <ProductSale />
       <HomeSection sectionName="New Products" viewAllButton>
