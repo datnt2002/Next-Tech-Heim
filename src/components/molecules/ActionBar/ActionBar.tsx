@@ -1,41 +1,32 @@
+"use client";
+import AuthModal from "@/components/organisms/Modal/AuthModal";
 import ErrorModal from "@/components/organisms/Modal/ErrorModal";
-import { cn } from "@/utils/cn";
+import useModalStore from "@/store/modal";
 import { Button } from "antd";
-import Image from "next/image";
 import React from "react";
 
-type Props = {};
-
-const ActionBar = (props: Props) => {
+const ActionBar = () => {
   //   const token = localStorage.getItem("token");
+  const { isAuthModalOpen, setOpen } = useModalStore((state) => state);
   return (
     <>
       <div className="flex items-center gap-2 my-5 py-2">
-        <>
-          <Button
-            className="md:block hidden self-center"
-            type="primary"
-            //   onClick={() => handleToggleModalAuth(true)}
-          >
-            Login / Sign Up
-          </Button>
-          <Button
-            type="text"
-            className="text-primary font-inter flex items-center md:hidden"
-            icon={<img src="/assets/icons/arrow/login_icon.svg" alt="" />}
-          >
-            Login
-          </Button>
-        </>
+        <Button
+          className="md:block hidden self-center"
+          type="primary"
+          onClick={() => setOpen("isAuthModalOpen", true)}
+        >
+          Login / Sign Up
+        </Button>
+
         {/* {token ? ( */}
         <>{/* <ProfileMenu /> */}</>
         {/* ) : ( */}
         {/* )} */}
       </div>
-      {/* 
-      {authModal && (
-        <AuthModal open={authModal} setOpen={handleToggleModalAuth} />
-      )} */}
+      {isAuthModalOpen && (
+        <AuthModal open={isAuthModalOpen} setOpen={setOpen} />
+      )}
 
       {/* {searchModal && (
         <SearchModal isOpen={searchModal} setIsOpen={handleToggleModalSearch} />
