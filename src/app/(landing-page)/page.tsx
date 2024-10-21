@@ -1,5 +1,5 @@
-import Banner from "@/components/molecules/Banner/Banner";
-import React, { Suspense } from "react";
+import Banner from "@/components/molecules/Banner";
+import React from "react";
 
 const LandingPage = () => {
   return (

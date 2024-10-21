@@ -2,9 +2,15 @@ import useModalStore from "@/store/modal";
 import useUserStore from "@/store/user";
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
 import React from "react";
-import SuccessModal from "../Modal/SuccessModal";
+import { registerService } from "@/services/auth.service";
+import dynamic from "next/dynamic";
+
+const DynamicSuccessModal = dynamic(() => import("../Modal/SuccessModal"), {
+  ssr: false,
+});
 
 type FieldType = {
+  username: string;
   name: string;
   email: string;
   number: number;
@@ -16,14 +22,20 @@ const RegisterForm = () => {
   const [form] = Form.useForm();
   const { register } = useUserStore();
   const { setOpen, isSuccessModalOpen } = useModalStore();
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     if (values?.isAgree) {
-      register({
+      const response = await registerService({
         email: values?.email,
         name: values?.name,
+        username: values?.username,
         number: values?.number,
         password: values?.password,
       });
+
+      if (response.statusCode === 201) {
+        register(response.data);
+        setOpen("isAuthModalOpen", false);
+      }
     }
   };
   return (
@@ -53,6 +65,31 @@ const RegisterForm = () => {
               />
             }
             placeholder="Name"
+          />
+        </Form.Item>
+        <Form.Item<FieldType>
+          name="username"
+          rules={[
+            { required: true, message: "Please input your fullName!" },
+            {
+              max: 50,
+              message: "Please input full name less than 50 characters",
+            },
+            {
+              min: 3,
+              message: "Please input full name more than 3 characters",
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            prefix={
+              <img
+                src="/assets/icons/user/user_icon.svg"
+                className="h-4 mr-2"
+              />
+            }
+            placeholder="Username"
           />
         </Form.Item>
         <Form.Item<FieldType>
@@ -159,7 +196,7 @@ const RegisterForm = () => {
         </Form.Item>
       </Form>
       {isSuccessModalOpen && (
-        <SuccessModal
+        <DynamicSuccessModal
           title="Well done"
           message="Congratulation your account has been successfully created"
           isOpen={isSuccessModalOpen}

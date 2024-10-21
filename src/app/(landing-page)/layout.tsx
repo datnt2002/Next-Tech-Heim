@@ -1,5 +1,5 @@
-import Header from "@/components/organisms/Header/Header";
 import React from "react";
+import Header from "@/components/organisms/Header";
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -13,17 +13,11 @@ const useUserStore = create<UserState>()(
   devtools(
     (set) => ({
       user: undefined,
-      register: async (data: RegisterRequestBody) => {
-        const response = await registerService(data);
-
-        if (response.isError) {
-          console.log("fetch fail", response);
-        }
-
+      register: (data: RegisterRequestBody) => {
         const { setOpen } = useModalStore.getState();
-        setOpen("isAuthModalOpen", false);
+
         setOpen("isSuccessModalOpen", true);
-        set((state) => ({ ...state, user: response.data }));
+        set((state) => ({ ...state, user: data }));
       },
     }),
     { name: "UserStore" }
