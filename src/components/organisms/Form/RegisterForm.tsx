@@ -1,32 +1,29 @@
+import useModalStore from "@/store/modal";
+import useUserStore from "@/store/user";
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
 import React from "react";
+import SuccessModal from "../Modal/SuccessModal";
 
 type FieldType = {
-  fullName: string;
+  name: string;
   email: string;
-  phoneNumber: string;
+  number: number;
   password: string;
   isAgree: boolean;
 };
 
 const RegisterForm = () => {
   const [form] = Form.useForm();
+  const { register } = useUserStore();
+  const { setOpen, isSuccessModalOpen } = useModalStore();
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     if (values?.isAgree) {
-      //   dispatch(
-      //     registerThunk({
-      //       email: values?.email,
-      //       fullName: values?.fullName,
-      //       phoneNumber: values?.phoneNumber,
-      //       password: values?.password,
-      //     })
-      //   );
-      //   dispatch(
-      //     setModalState({
-      //       key: "authModal",
-      //       isOpen: false,
-      //     })
-      //   );
+      register({
+        email: values?.email,
+        name: values?.name,
+        number: values?.number,
+        password: values?.password,
+      });
     }
   };
   return (
@@ -34,7 +31,7 @@ const RegisterForm = () => {
       <h2 className="mt-4 text-center mb-5">Create your account</h2>
       <Form form={form} onFinish={onFinish}>
         <Form.Item<FieldType>
-          name="fullName"
+          name="name"
           rules={[
             { required: true, message: "Please input your fullName!" },
             {
@@ -55,7 +52,7 @@ const RegisterForm = () => {
                 className="h-4 mr-2"
               />
             }
-            placeholder="Full Name"
+            placeholder="Name"
           />
         </Form.Item>
         <Form.Item<FieldType>
@@ -84,7 +81,7 @@ const RegisterForm = () => {
           />
         </Form.Item>
         <Form.Item<FieldType>
-          name="phoneNumber"
+          name="number"
           rules={[
             { required: true, message: "Please input your fullName!" },
             {
@@ -161,14 +158,14 @@ const RegisterForm = () => {
           </Button>
         </Form.Item>
       </Form>
-      {/* {successModal && (
+      {isSuccessModalOpen && (
         <SuccessModal
           title="Well done"
           message="Congratulation your account has been successfully created"
-          isOpen={successModal}
-          setIsOpen={handleToggleModalSuccess}
+          isOpen={isSuccessModalOpen}
+          setIsOpen={setOpen}
         />
-      )} */}
+      )}
     </>
   );
 };

@@ -1,9 +1,15 @@
 "use client";
-import AuthModal from "@/components/organisms/Modal/AuthModal";
+
 import ErrorModal from "@/components/organisms/Modal/ErrorModal";
 import useModalStore from "@/store/modal";
 import { Button } from "antd";
+import dynamic from "next/dynamic";
 import React from "react";
+
+const DynamicAuthModal = dynamic(
+  () => import("@/components/organisms/Modal/AuthModal"),
+  { ssr: false }
+);
 
 const ActionBar = () => {
   //   const token = localStorage.getItem("token");
@@ -25,12 +31,8 @@ const ActionBar = () => {
         {/* )} */}
       </div>
       {isAuthModalOpen && (
-        <AuthModal open={isAuthModalOpen} setOpen={setOpen} />
+        <DynamicAuthModal open={isAuthModalOpen} setOpen={setOpen} />
       )}
-
-      {/* {searchModal && (
-        <SearchModal isOpen={searchModal} setIsOpen={handleToggleModalSearch} />
-      )} */}
 
       {/* {errorModal && (
         <ErrorModal

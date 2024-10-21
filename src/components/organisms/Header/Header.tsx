@@ -1,12 +1,11 @@
 import Image from "next/image";
 import { Button } from "antd";
-
-import ActionBar from "@/components/molecules/ActionBar/ActionBar";
+import ActionBar from "@/components/molecules/ActionBar";
 
 const Header = () => {
   return (
     <>
-      <header className=" flex justify-between items-center py-2 md:py-0 px-1 md:px-6 lg:px-28 md:h-[100px] h-10">
+      <header className="flex justify-between items-center py-2 md:py-0 px-1 md:px-6 lg:px-28 md:h-[100px] h-10">
         <div className="relative hidden md:block md:h-full md:w-10">
           <Image
             src="/assets/images/logo.svg"

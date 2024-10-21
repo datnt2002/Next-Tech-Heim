@@ -1,6 +1,7 @@
 import AuthTab from "@/components/molecules/Tab/AuthTab";
 import { ModalState } from "@/store/modal";
 import { Modal } from "antd";
+import Image from "next/image";
 
 type ModalProps = {
   open: boolean;
@@ -13,10 +14,14 @@ const AuthModal = ({ open, setOpen }: ModalProps) => {
       <Modal
         className="max-w-[600px]"
         title={
-          <img
-            src="/assets/images/logo_text.svg"
-            className="mx-auto block md:hidden"
-          />
+          <div className="relative h-11">
+            <Image
+              src="/assets/images/logo_text.svg"
+              className="mx-auto"
+              fill
+              alt=""
+            />
+          </div>
         }
         centered
         open={open}

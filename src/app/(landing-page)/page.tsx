@@ -4,9 +4,8 @@ import React, { Suspense } from "react";
 const LandingPage = () => {
   return (
     <div className="px-6 md:px-28 mb-14">
-      <Suspense fallback={<p>loading</p>}>
-        <Banner />
-      </Suspense>
+      <Banner />
+
       {/* <CategoryHomeList />
       <ProductSale />
       <HomeSection sectionName="New Products" viewAllButton>

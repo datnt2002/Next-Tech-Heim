@@ -84,4 +84,6 @@ class HttpClient {
   }
 }
 
-export const httpClient = new HttpClient(process.env.BASE_URL as string);
+export const httpClient = new HttpClient(
+  process.env.NEXT_PUBLIC_BASE_URL as string
+);
