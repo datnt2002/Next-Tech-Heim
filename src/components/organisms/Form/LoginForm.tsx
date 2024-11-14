@@ -1,3 +1,6 @@
+import { loginService } from "@/services/auth.service";
+import useModalStore from "@/store/modal";
+import useUserStore from "@/store/user";
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input } from "antd";
 
@@ -9,14 +12,12 @@ type FieldType = {
 
 const LoginForm = () => {
   const [form] = Form.useForm();
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    // dispatch(loginThunk({ email: values.email, password: values.password }));
-    // dispatch(
-    //   setModalState({
-    //     key: "authModal",
-    //     isOpen: false,
-    //   })
-    // );
+  const { login } = useUserStore();
+  const { setOpen } = useModalStore();
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    const response = await loginService(values);
+    login(response);
+    setOpen("isAuthModalOpen", false);
   };
 
   return (

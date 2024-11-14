@@ -1,3 +1,5 @@
+"use client";
+
 import useModalStore from "@/store/modal";
 import useUserStore from "@/store/user";
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
@@ -5,9 +7,9 @@ import React from "react";
 import { registerService } from "@/services/auth.service";
 import dynamic from "next/dynamic";
 
-const DynamicSuccessModal = dynamic(() => import("../Modal/SuccessModal"), {
-  ssr: false,
-});
+// const DynamicSuccessModal = dynamic(() => import("../Modal/SuccessModal"), {
+//   ssr: false,
+// });
 
 type FieldType = {
   username: string;
@@ -33,7 +35,7 @@ const RegisterForm = () => {
       });
 
       if (response.statusCode === 201) {
-        register(response.data);
+        register(response);
         setOpen("isAuthModalOpen", false);
       }
     }
