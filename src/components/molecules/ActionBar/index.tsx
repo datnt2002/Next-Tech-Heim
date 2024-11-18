@@ -1,49 +1,35 @@
-"use client";
+'use client'
+import useModalStore from '@/store/modal'
+import useUserStore from '@/store/user'
+import { Button } from 'antd'
+import dynamic from 'next/dynamic'
+import React from 'react'
+import ProfileMenuDropdown from '../Dropdown/ProfileMenuDropdown'
 
-import ErrorModal from "@/components/organisms/Modal/ErrorModal";
-import useModalStore from "@/store/modal";
-import { Button } from "antd";
-import dynamic from "next/dynamic";
-import React from "react";
-
-const DynamicAuthModal = dynamic(
-  () => import("@/components/organisms/Modal/AuthModal"),
-  { ssr: false }
-);
+const DynamicAuthModal = dynamic(() => import('@/components/organisms/Modal/AuthModal'), { ssr: false })
 
 const ActionBar = () => {
-  //   const token = localStorage.getItem("token");
-  const { isAuthModalOpen, setOpen } = useModalStore((state) => state);
+  const { isAuthModalOpen, setOpen } = useModalStore()
+  const { user } = useUserStore()
+
   return (
     <>
       <div className="flex items-center gap-2 my-5 py-2">
-        <Button
-          className="md:block hidden self-center"
-          type="primary"
-          onClick={() => setOpen("isAuthModalOpen", true)}
-        >
-          Login / Sign Up
-        </Button>
-
-        {/* {token ? ( */}
-        <>{/* <ProfileMenu /> */}</>
-        {/* ) : ( */}
-        {/* )} */}
+        {user ? (
+          <ProfileMenuDropdown />
+        ) : (
+          <Button
+            className="md:block hidden self-center"
+            type="primary"
+            onClick={() => setOpen('isAuthModalOpen', true)}
+          >
+            Login / Sign Up
+          </Button>
+        )}
       </div>
-      {isAuthModalOpen && (
-        <DynamicAuthModal open={isAuthModalOpen} setOpen={setOpen} />
-      )}
-
-      {/* {errorModal && (
-        <ErrorModal
-          title="Oops"
-          message="Unfortunately, there was a problem during creating your account. try again later."
-          isOpen={true}
-          setIsOpen={handleToggleModalError}
-        />
-      )} */}
+      {isAuthModalOpen && <DynamicAuthModal open={isAuthModalOpen} setOpen={setOpen} />}
     </>
-  );
-};
+  )
+}
 
-export default ActionBar;
+export default ActionBar
