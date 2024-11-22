@@ -1,5 +1,5 @@
-import React from "react";
-import Header from "@/components/organisms/Header";
+import React from 'react'
+import Header from '@/components/organisms/Header'
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -7,7 +7,7 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default LandingLayout;
+export default LandingLayout
